@@ -1,3 +1,10 @@
+STUFF I DID
+
+- I added a scuffed timer to make the terraforming buttons work when held and take some strain off my wrists
+- For the position locked camera, I tacked the position of the draw_camera_logic marker to the camera, so that it stays the same size on-screen when zooming (for added clarity). It's also quite large.
+
+
+
 # Camera Control Exercise
 
 ## Description

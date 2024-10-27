@@ -4,6 +4,8 @@ extends CharacterBody3D
 @export var terrforming_power:float = 1.0
 @export var terrain_manager:TerrainManager
 
+var _scuffed_timer:float = 0.0
+
 const RADIUS:float = 0.5
 const HEIGHT:float = RADIUS * 2.0
 const WIDTH:float = RADIUS * 2.0
@@ -20,13 +22,19 @@ func _physics_process(_delta):
 		speed = HYPER_SPEED
 		$ParticleTrail.visible = true
 
-	if Input.is_action_just_pressed("raise_terrain"):
-		_play($Audio/Terraforming)
-		terrain_manager.move_vertex_below_position(global_position, terrforming_power)
+	if Input.is_action_pressed("raise_terrain"):
+		_scuffed_timer += _delta
+		if _scuffed_timer >= 0.2:
+			_scuffed_timer = 0
+			_play($Audio/Terraforming)
+			terrain_manager.move_vertex_below_position(global_position, terrforming_power)
 		
-	if Input.is_action_just_pressed("lower_terrain"):
-		_play($Audio/Terraforming)
-		terrain_manager.move_vertex_below_position(global_position, -terrforming_power)
+	if Input.is_action_pressed("lower_terrain"):
+		_scuffed_timer += _delta
+		if _scuffed_timer >= 0.2:
+			_scuffed_timer = 0
+			_play($Audio/Terraforming)
+			terrain_manager.move_vertex_below_position(global_position, -terrforming_power)
 
 	
 	var input_dir = Vector2(
