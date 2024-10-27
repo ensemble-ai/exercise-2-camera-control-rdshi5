@@ -2,6 +2,7 @@ STUFF I DID
 
 - I added a scuffed timer to make the terraforming buttons work when held and take some strain off my wrists
 - For the position locked camera, I tacked the position of the draw_camera_logic marker to the camera, so that it stays the same size on-screen when zooming (for added clarity). It's also quite large.
+- For the autoscrolling camera, I added an exported boolean variable to control whether the vessel naturally follows the camera. When true, the vessel's motion will always remain constant relative to the frame. When false, the vessel's motion will always remain constant relative to the world and will get dragged along.
 
 
 
