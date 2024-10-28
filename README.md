@@ -1,8 +1,10 @@
 STUFF I DID
 
-- I added a scuffed timer to make the terraforming buttons work when held and take some strain off my wrists
-- For the position locked camera, I tacked the position of the draw_camera_logic marker to the camera, so that it stays the same size on-screen when zooming (for added clarity). It's also quite large.
+- I added a scuffed timer to make the terraforming buttons work when held down (taking some strain off my wrists)
+- For the push box camera, I added an exported variable proportionate_box to toggle whether the box remains constant on-screen
+- For the position locked camera (and its family of similar cameras), I tacked the position of the crosshair marker to the camera, so that it stays the same size on-screen when zooming (for added clarity). It's also quite large.
 - For the autoscrolling camera, I added an exported boolean variable to control whether the vessel naturally follows the camera. When true, the vessel's motion will always remain constant relative to the frame. When false, the vessel's motion will always remain constant relative to the world and will get dragged along.
+- For the lerp smoothed position locked camera, I added a toggle for an alternative nonlinear smoothing mode which achieves the same effect but much more elegantly in my opinion (by making the catchup rate a non-linear function of the distance, scaling it to target speed within a clamped range). Toggle by switching the exported variable "alternative_smoothing" and enjoy the superior smoothing action.
 
 
 

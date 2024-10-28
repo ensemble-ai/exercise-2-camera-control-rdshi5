@@ -4,11 +4,17 @@ extends CameraControllerBase
 
 @export var box_width:float = 10.0
 @export var box_height:float = 10.0
+@export var proportionate_box:bool = false
+
+var _obox_width:float
+var _obox_height:float
 
 
 func _ready() -> void:
 	super()
 	position = target.position
+	_obox_width = box_width
+	_obox_height = box_height
 	
 
 func _process(delta: float) -> void:
@@ -20,6 +26,11 @@ func _process(delta: float) -> void:
 	
 	var tpos = target.global_position
 	var cpos = global_position
+	
+	#scales the box appropriately
+	if proportionate_box:
+		box_width = _obox_width * dist_above_target / 10
+		box_height = _obox_height * dist_above_target/10
 	
 	#boundary checks
 	#left
