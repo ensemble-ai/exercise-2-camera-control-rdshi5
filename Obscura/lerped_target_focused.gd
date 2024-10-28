@@ -1,15 +1,20 @@
-class_name LerpedPositionLocked
+class_name LerpedTargetFocused
 extends CameraControllerBase
 
-@export var follow_speed:float
+@export var lead_speed:float
+@export var catchup_delay_duration:float
 @export var catchup_speed:float
 @export var leash_distance:float
 @export var alternative_smoothing:bool = true
 #the implementation I prefer is on by default, toggle off in inspector to see the more vanilla version
 
+var _anchor:Vector3
+var _time:float
+
 func _ready() -> void:
 	super()
 	position = target.position
+	_anchor = position
 
 
 func _process(delta: float) -> void:
@@ -19,31 +24,43 @@ func _process(delta: float) -> void:
 	if draw_camera_logic:
 		draw_logic()
 	
-	var diff:Vector3 = target.position - position
-	diff.y = 0
-	
 	if alternative_smoothing:
-		position += diff * clampf(target.velocity.length()/625, 0.08, 0.25)
-	else:
-		if diff.length() > leash_distance:
-			if target.velocity == Vector3.ZERO:
-				position += 0.12 * diff
-			else:
-				position += diff.normalized() * target.velocity.length() * delta
-		elif not target.velocity == Vector3.ZERO:
-			#follow
-			position += diff.normalized() * target.velocity.length() * follow_speed * delta
+		var diff:Vector3 = target.position - _anchor
+		diff.y = 0
+		
+		if target.velocity == Vector3.ZERO:
+			_time += delta
 		else:
-			#catchup
+			_time = 0
+		
+		if (not target.velocity == Vector3.ZERO) or _time > catchup_delay_duration:
+			_anchor += diff * clampf(target.velocity.length()/625, 0.08, 0.25)
+			#set the camera's position equal to the precise opposite of the anchor
+			#_anchor + (target.position - _anchor) + (target.position - _anchor)
+			position = 2 * target.position - _anchor
+	else:
+		#this solution kinda works, but it's buggy and I don't like it
+		
+		var diff:Vector3 = position - target.position
+		diff.y = 0
+		
+		if not target.velocity == Vector3.ZERO:
+			_time = 0
 			
-			#I personally prefer using this nonlinear smoothing pattern
-			#position += 0.06 * diff
+			position += target.velocity * delta * lead_speed
 			
-			#but for the assignment, the following better conforms to the instructions
-			if diff.length() < 0.025 * leash_distance:
-				position = target.position
-			else:
-				position += diff.normalized() * target.BASE_SPEED * catchup_speed * delta
+			if diff.length() > leash_distance:
+				position = target.position + target.velocity.normalized() * leash_distance
+			
+			
+		if target.velocity == Vector3.ZERO:
+			_time += delta
+			if _time > catchup_delay_duration:
+				position -= diff.normalized() * catchup_speed * delta
+				if diff.length() < 0.01 * leash_distance:
+					_time = 0
+					position = target.position
+	
 	
 	super(delta)
 
