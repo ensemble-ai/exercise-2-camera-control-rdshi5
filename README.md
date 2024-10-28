@@ -1,5 +1,6 @@
-STUFF I DID
+BIG WORDS HERE
 
+- Feel free to ignore the three push box cameras at the beginning. I kept them around for experimentation.
 - I added a scuffed timer to make the terraforming buttons work when held down (taking some strain off my wrists)
 - For the push box camera, I added an exported variable proportionate_box to toggle whether the box remains constant on-screen
 - For the position locked camera (and its family of similar cameras), I tacked the position of the crosshair marker to the camera, so that it stays the same size on-screen when zooming (for added clarity when zooming far out).
@@ -7,7 +8,10 @@ STUFF I DID
 - For the lerp smoothed position locked camera, I added a toggle for an alternative smoothing mode which achieves the same effect but much more elegantly in my opinion (by making the catchup rate a function of the distance, scaling it to target speed within a clamped range). Toggle by switching the exported variable "alternative_smoothing" and enjoy the superior smoothing action. I'm proud of this one.
 - For the lerp smoothed target-focused camera, I also added alternative smoothing. It uses the same formula as I did for the stage 3 camera, but inverted using an anchor variable and some vector math. It's a vastly superior method compared to my vanilla solution.
 - For the two alternative smoothing modes described above, the rate of catch up, delays, max distance, etc. can all be adjusted by fiddling with the formula internally (I decided not to export the innards to keep things minimally confusing)
+- For the push zone camera, I also added the proportionate box toggle 
 
+
+this project used so much vector math  T_T
 
 # Camera Control Exercise
 

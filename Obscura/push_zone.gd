@@ -8,10 +8,18 @@ extends CameraControllerBase
 @export var speedup_zone_bottom_right:Vector2
 @export var proportionate_box:bool = false
 
+var _opushbox_top_left:Vector2
+var _opushbox_bottom_right:Vector2
+var _ospeedup_zone_top_left:Vector2
+var _ospeedup_zone_bottom_right:Vector2
+
 func _ready() -> void:
 	super()
 	position = target.position
-	
+	_opushbox_top_left = pushbox_top_left
+	_opushbox_bottom_right = pushbox_bottom_right
+	_ospeedup_zone_top_left = speedup_zone_top_left
+	_ospeedup_zone_bottom_right = speedup_zone_bottom_right
 
 func _process(delta: float) -> void:
 	if !current:
@@ -20,6 +28,11 @@ func _process(delta: float) -> void:
 	if draw_camera_logic:
 		draw_logic()
 	
+	if proportionate_box:
+		pushbox_top_left = _opushbox_top_left * dist_above_target / 10
+		pushbox_bottom_right = _opushbox_bottom_right * dist_above_target / 10
+		speedup_zone_top_left = _ospeedup_zone_top_left * dist_above_target / 10
+		speedup_zone_bottom_right = _ospeedup_zone_bottom_right * dist_above_target / 10
 	
 	var tpos = target.global_position
 	var cpos = global_position
