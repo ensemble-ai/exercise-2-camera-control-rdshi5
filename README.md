@@ -6,6 +6,7 @@ STUFF I DID
 - For the autoscrolling camera, I added an exported boolean variable to control whether the vessel naturally follows the camera. When true, the vessel's motion will always remain constant relative to the frame. When false, the vessel's motion will always remain constant relative to the world and will get dragged along by the frame when it hits the border.
 - For the lerp smoothed position locked camera, I added a toggle for an alternative smoothing mode which achieves the same effect but much more elegantly in my opinion (by making the catchup rate a function of the distance, scaling it to target speed within a clamped range). Toggle by switching the exported variable "alternative_smoothing" and enjoy the superior smoothing action. I'm proud of this one.
 - For the lerp smoothed target-focused camera, I also added alternative smoothing. It uses the same formula as I did for the stage 3 camera, but inverted using an anchor variable and some vector math. It's a vastly superior method compared to my vanilla solution.
+- For the two alternative smoothing modes described above, the rate of catch up, delays, max distance, etc. can all be adjusted by fiddling with the formula internally (I decided not to export the innards to keep things minimally confusing)
 
 
 # Camera Control Exercise

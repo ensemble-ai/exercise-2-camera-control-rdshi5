@@ -1,15 +1,17 @@
-class_name AutoscrollFrame
+class_name PushZone
 extends CameraControllerBase
 
-@export var top_left:Vector2
-@export var bottom_right:Vector2
-@export var autoscroll_speed:Vector3
-@export var relative_motion:bool = false
+@export var push_ratio:float
+@export var pushbox_top_left:Vector2
+@export var pushbox_bottom_right:Vector2
+@export var speedup_zone_top_left:Vector2
+@export var speedup_zone_bottom_right:Vector2
+@export var proportionate_box:bool = false
 
 func _ready() -> void:
 	super()
 	position = target.position
-
+	
 
 func _process(delta: float) -> void:
 	if !current:
@@ -18,33 +20,40 @@ func _process(delta: float) -> void:
 	if draw_camera_logic:
 		draw_logic()
 	
-	position += autoscroll_speed / delta
-	if relative_motion:
-		target.position += autoscroll_speed / delta
 	
 	var tpos = target.global_position
 	var cpos = global_position
 	
-	
-	#boundary checks and pushing
 	#left
-	var left_diff = (cpos.x + top_left.x) - (tpos.x - target.WIDTH / 2.0)
+	var left_diff = (cpos.x + pushbox_top_left.x) - (tpos.x - target.WIDTH / 2.0)
 	if left_diff > 0:
-		target.global_position.x += left_diff
+		global_position.x -= left_diff
+	elif (tpos - cpos).x < speedup_zone_top_left.x and target.velocity.x < 0:
+		global_position.x += target.velocity.x * delta * push_ratio
+	
 	#right
-	var right_diff = (tpos.x + target.WIDTH / 2.0) - (cpos.x + bottom_right.x)
+	var right_diff = (tpos.x + target.WIDTH / 2.0) - (cpos.x + pushbox_bottom_right.x)
 	if right_diff > 0:
-		target.position.x -= right_diff
+		position.x += right_diff
+	elif (tpos - cpos).x > speedup_zone_bottom_right.x and target.velocity.x > 0:
+		global_position.x += target.velocity.x * delta * push_ratio
+	
 	#top
-	var top_diff = (cpos.z + top_left.y) - (tpos.z - target.HEIGHT / 2.0)
+	var top_diff = (cpos.z + pushbox_top_left.y) - (tpos.z - target.HEIGHT / 2.0)
 	if top_diff > 0:
-		target.position.z += top_diff
+		position.z -= top_diff
+	elif (tpos - cpos).z < speedup_zone_top_left.y and target.velocity.z < 0:
+		global_position.z += target.velocity.z * delta * push_ratio
+	
 	#bottom
-	var bottom_diff = (tpos.z + target.HEIGHT / 2.0) - (cpos.z + bottom_right.y)
+	var bottom_diff = (tpos.z + target.HEIGHT / 2.0) - (cpos.z + pushbox_bottom_right.y)
 	if bottom_diff > 0:
-		target.position.z -= bottom_diff
+		position.z += bottom_diff
+	elif (tpos - cpos).z > speedup_zone_bottom_right.y and target.velocity.z > 0:
+		global_position.z += target.velocity.z * delta * push_ratio
 	
 	super(delta)
+
 
 func draw_logic() -> void:
 	var mesh_instance := MeshInstance3D.new()
@@ -54,10 +63,10 @@ func draw_logic() -> void:
 	mesh_instance.mesh = immediate_mesh
 	mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	
-	var left:float = top_left.x
-	var right:float = bottom_right.x
-	var top:float = top_left.y
-	var bottom:float = bottom_right.y
+	var left:float = pushbox_top_left.x
+	var right:float = pushbox_bottom_right.x
+	var top:float = pushbox_top_left.y
+	var bottom:float = pushbox_bottom_right.y
 	
 	immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES, material)
 	immediate_mesh.surface_add_vertex(Vector3(right, 0, top))
@@ -72,7 +81,6 @@ func draw_logic() -> void:
 	immediate_mesh.surface_add_vertex(Vector3(left, 0, top))
 	immediate_mesh.surface_add_vertex(Vector3(right, 0, top))
 	immediate_mesh.surface_end()
-
 
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	material.albedo_color = Color.BLACK

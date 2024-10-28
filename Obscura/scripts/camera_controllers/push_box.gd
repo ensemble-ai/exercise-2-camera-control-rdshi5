@@ -30,7 +30,7 @@ func _process(delta: float) -> void:
 	#scales the box appropriately
 	if proportionate_box:
 		box_width = _obox_width * dist_above_target / 10
-		box_height = _obox_height * dist_above_target/10
+		box_height = _obox_height * dist_above_target / 10
 	
 	#boundary checks
 	#left
