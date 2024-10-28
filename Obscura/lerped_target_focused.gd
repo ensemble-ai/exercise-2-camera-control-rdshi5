@@ -38,6 +38,12 @@ func _process(delta: float) -> void:
 			#set the camera's position equal to the precise opposite of the anchor
 			#_anchor + (target.position - _anchor) + (target.position - _anchor)
 			position = 2 * target.position - _anchor
+		
+		#to prevent any wonky indefinite counting
+		if diff.length() < 0.001 * leash_distance:
+			_time = 0
+			position = target.position
+		
 	else:
 		#this solution kinda works, but it's buggy and I don't like it
 		
