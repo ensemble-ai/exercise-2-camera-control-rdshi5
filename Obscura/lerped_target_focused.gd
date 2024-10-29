@@ -45,7 +45,7 @@ func _process(delta: float) -> void:
 			position = target.position
 		
 	else:
-		#this solution kinda works, but it's buggy and I don't like it
+		#this solution works, but it's not as elegant and I don't like it
 		
 		var diff:Vector3 = position - target.position
 		diff.y = 0
@@ -56,14 +56,13 @@ func _process(delta: float) -> void:
 			position += target.velocity * delta * lead_speed
 			
 			if diff.length() > leash_distance:
-				position = target.position + target.velocity.normalized() * leash_distance
-			
+				position -= diff.normalized() * (diff.length() - leash_distance) * delta
 			
 		if target.velocity == Vector3.ZERO:
 			_time += delta
 			if _time > catchup_delay_duration:
 				position -= diff.normalized() * catchup_speed * delta
-				if diff.length() < 0.01 * leash_distance:
+				if diff.length() < 0.05 * leash_distance:
 					_time = 0
 					position = target.position
 	
