@@ -23,7 +23,7 @@ func _process(delta: float) -> void:
 	diff.y = 0
 	
 	if alternative_smoothing:
-		position += diff * clampf(target.velocity.length()/625, 0.08, 0.25)
+		position += diff * clampf(target.velocity.length()/625, 0.08, 0.35)
 	else:
 		if diff.length() > leash_distance:
 			if target.velocity == Vector3.ZERO:

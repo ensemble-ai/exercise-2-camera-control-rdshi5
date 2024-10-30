@@ -34,7 +34,7 @@ func _process(delta: float) -> void:
 			_time = 0
 		
 		if (not target.velocity == Vector3.ZERO) or _time > catchup_delay_duration:
-			_anchor += diff * clampf(target.velocity.length()/625, 0.08, 0.25)
+			_anchor += diff * clampf(target.velocity.length()/625, 0.08, 0.35)
 			#set the camera's position equal to the precise opposite of the anchor
 			#_anchor + (target.position - _anchor) + (target.position - _anchor)
 			position = 2 * target.position - _anchor
