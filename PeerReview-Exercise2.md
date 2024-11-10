@@ -139,11 +139,11 @@ Example 2: for the file [lerped_position_locked_line_26](https://github.com/ense
 
 Exmaple 3: for the file [lerped_target_focused.gd line 4-8](https://github.com/ensemble-ai/exercise-2-camera-control-rdshi5/blob/8dd11a175855fb32d50e1f45352335ade1525b16/Obscura/lerped_target_focused.gd#L4).: due to the issue that I points out previous for this stage, the output did not reach the complete requirement. By testing, the values for lead_speed, catchup_delay_duration, catchup_speed, and leash_distance should not set fault, we need to test them to see which specific value will be the best for the camera movement.
 
-Exmaple 4: for the file [push_zone.gd](https://github.com/ensemble-ai/exercise-2-camera-control-rdshi5/blob/8dd11a175855fb32d50e1f45352335ade1525b16/Obscura/push_zone.gd#L4).: One can also think about lack of enough commenting especially in parts that has numerate computations regarding push zone functionality. While documenting a piece of code it always helps to explain the larger part in more detail especially in the form of comments that explains the logic behind the code. Further, variable naming in the script contains abbreviations and unclear terms These ensure that few of the readers get the correct interpretations of the variables as originally intended which underlines the need for better variable naming. In addition, this happen in all stages.
-
-
 
 #### Style Guide Exemplars ####
+However, there are some good exemplars that everyone can learn from this. Some exemplars that I won't point out because some part of the code an logic are from the original code files that the Professor provided. 
+
+Exmaple one: Through the file [autoscroll_frame](https://github.com/ensemble-ai/exercise-2-camera-control-rdshi5/blob/562fb12c2422c78341e99b44723cba3de0ad158b/Obscura/autoscroll_frame.gd#L4).:  GDScript's @export keyword is very well implemented by the script to expose variables for the Godot editor, like autoscroll_speed, and top_left and bottom_right boundary vectors can be easily changed within the editor. This use of @export makes the script versatile and easy to use in the Godot environment due to the designer’s and developer’s friendly usage.
 
 ___
 #### Put style guide infractures ####
@@ -162,5 +162,16 @@ If the student has breached the best practices and has done something that shoul
 This should be similar to the Code Style justification.
 
 #### Best Practices Infractions ####
+The lack of comments is a big issue in this assignment. Some of the parts made me feel really confused. I am not saying the code is bad, but the student should provide some specific explanation of how some of the lines work. It really needs me to spend a lot of time on understanding the code to see what is going on at each stage.
+
+Exmaple: for the file [push_zone.gd](https://github.com/ensemble-ai/exercise-2-camera-control-rdshi5/blob/8dd11a175855fb32d50e1f45352335ade1525b16/Obscura/push_zone.gd#L4).: One can also think about lack of enough commenting especially in parts that has numerate computations regarding push zone functionality. While documenting a piece of code it always helps to explain the larger part in more detail, especially in the form of comments that explains the logic behind the code. Further, variable naming in the script contains abbreviations and unclear terms These ensure that few of the readers get the correct interpretations of the variables as originally intended which underlines the need for better variable naming. 
+
+One another thing just like what I said from the code style review, the variable and the default value by [@export](https://github.com/ensemble-ai/exercise-2-camera-control-rdshi5/blob/8dd11a175855fb32d50e1f45352335ade1525b16/Obscura/lerped_target_focused.gd#L4). are fine for the basic testing but it will be harmful. This might cause the camera to be unstable and lead the vessel to shake when it is moving. The student really needs to set the value to do the test to find the best value for the camera. This will let players feel more comfortable.
 
 #### Best Practices Exemplars ####
+Through the code, I need some good practices. Through the file [autoscroll_frame.gd line 14 - 26](https://github.com/ensemble-ai/exercise-2-camera-control-rdshi5/blob/562fb12c2422c78341e99b44723cba3de0ad158b/Obscura/autoscroll_frame.gd#L14), it is good to break down complex logic into smaller, manageable functions.
+
+Through the GitHub report, the student added some good notes on how the code works, this is a good place to let reviewers understand what is going on. However, I preferred to write them into code as comments so that reviewers can better understand the code. The student explain what unique ways are used in each good stage. 
+
+
+
