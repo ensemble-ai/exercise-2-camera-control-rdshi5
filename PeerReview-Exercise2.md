@@ -131,6 +131,16 @@ Please refer to the first code review template on how to do a permalink.
 
 
 #### Style Guide Infractions ####
+Due to some stages did not reach to the requirements, I found some infractions. They might not be a big issue but they will let the reviewer be so confused.
+
+Example 1: from the file [lerped_position_locked line 22](https://github.com/ensemble-ai/exercise-2-camera-control-rdshi5/blob/8dd11a175855fb32d50e1f45352335ade1525b16/Obscura/lerped_position_locked.gd#L22).:  diff will now store the difference between the Camera's current position, and the target's position. Although diff is somewhat indicative of difference, it is a poor name because it is too general and doesn’t really help anybody reading the call that much. If we change the name of this variable to position_difference, it will become much clearer to anyone seeing it in the code what this variable is actually used for, and it will make this code far more maintainable.
+
+Example 2: for the file [lerped_position_locked_line_26](https://github.com/ensemble-ai/exercise-2-camera-control-rdshi5/blob/8dd11a175855fb32d50e1f45352335ade1525b16/Obscura/lerped_position_locked.gd#L26).: In the code snippet the numbers are directly used in calculation for position updates which is another kind of infraction, using magic numbers. The clampf function call numbers 625, 0.08 and 0.35 looks out of context as it doesn’t provide much meaning and makes the code hard to understand and maintain. It is suggested to replace these magic numbers with named constants which give meaning to context. For example: whenever using constants such as VELOCITY_DIVISOR, MIN_VELOCITY_FACTOR or MAX_VELOCITY_FACTOR they are being used to express their meaning, making the code easy to understand, easy to maintain or modify in the future. This practice also makes the role of these values easier to adjust and test.
+
+Exmaple 3: for the file [lerped_target_focused.gd line 4-8](https://github.com/ensemble-ai/exercise-2-camera-control-rdshi5/blob/8dd11a175855fb32d50e1f45352335ade1525b16/Obscura/lerped_target_focused.gd#L4).: due to the issue that I points out previous for this stage, the output did not reach the complete requirement. By testing, the values for lead_speed, catchup_delay_duration, catchup_speed, and leash_distance should not set fault, we need to test them to see which specific value will be the best for the camera movement.
+
+Exmaple 4: for the file [push_zone.gd](https://github.com/ensemble-ai/exercise-2-camera-control-rdshi5/blob/8dd11a175855fb32d50e1f45352335ade1525b16/Obscura/push_zone.gd#L4).: One can also think about lack of enough commenting especially in parts that has numerate computations regarding push zone functionality. While documenting a piece of code it always helps to explain the larger part in more detail especially in the form of comments that explains the logic behind the code. Further, variable naming in the script contains abbreviations and unclear terms These ensure that few of the readers get the correct interpretations of the variables as originally intended which underlines the need for better variable naming. In addition, this happen in all stages.
+
 
 
 #### Style Guide Exemplars ####
